@@ -17,3 +17,8 @@ node ace list:routes
 ```
 node ace serve --watch
 ```
+
+### para criar novo modelo com migration e factory
+```
+node ace make:model User -m -f
+```
