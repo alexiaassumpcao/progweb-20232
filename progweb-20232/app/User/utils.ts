@@ -1,4 +1,4 @@
-import { UserFactory, UserType, UserUpdateRequestFactory } from "App/interfaces/usuario"
+import { UserFactory, UserType, UserUpdateRequestFactory } from "App/User/interface"
 import { UserRepository } from "./repository"
 import { UserService } from "./service"
 

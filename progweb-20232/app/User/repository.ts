@@ -1,5 +1,5 @@
 import User from "App/Models/User"
-import { UserType } from "App/interfaces/usuario"
+import { UserType } from "App/User/interface"
 
 export class UserRepository {
     idField: "id"

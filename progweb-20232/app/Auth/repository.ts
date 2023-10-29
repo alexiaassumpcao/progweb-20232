@@ -1,5 +1,5 @@
 import Auth from 'App/Models/Auth'
-import { AuthType } from 'App/interfaces/auth'
+import { AuthType } from 'App/Auth/interface'
 
 export class AuthRepository {
     async listAuths():Promise<Auth[]> {

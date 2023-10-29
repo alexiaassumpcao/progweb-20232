@@ -1,7 +1,7 @@
 import { AuthService } from "./service";
 import { AuthRepository } from "./repository";
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { AuthFactory } from "App/interfaces/auth";
+import { AuthFactory } from "App/Auth/interface";
 
 export default class AuthController {
     public async list({}: HttpContextContract) {
