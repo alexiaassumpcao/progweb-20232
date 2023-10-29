@@ -9,12 +9,12 @@ export class PostRepository {
 
 
     async list(params: PostParamsType): Promise<Post[]> {
-        if (params.user_id!= undefined) {
-            const posts = await Post.query().where(this.userIDField, "="+params.user_id)
+        if (params.user_id != undefined) {
+            const posts = await Post.query().where(this.userIDField, params.user_id)
             return posts
         }
-        if (params.title!= undefined) {
-            const posts = await Post.query().where(this.titleField, "LIKE %"+params.title+"%")
+        if (params.title != undefined) {
+            const posts = await Post.query().where(this.titleField, 'LIKE', "%"+params.title+"%")
             return posts
         }
         return await Post.all()

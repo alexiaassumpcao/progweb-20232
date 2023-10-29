@@ -23,7 +23,7 @@ export const AuthCreateRequest = schema.create({
 })
 
 export const AuthUpdateRequest = schema.create({
-    id: schema.number(),
+    id: schema.number.optional(),
     user_id: schema.number([
         rules.required()
     ]),

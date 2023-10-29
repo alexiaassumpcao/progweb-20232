@@ -52,13 +52,13 @@ export default class PostController {
 
     public async list({ request }: HttpContextContract) {
         try {
-            const params = await request.params().validate({ schema: PostParams })
+            const params = await request.qs()
             const svc = CreatePostService()
+            
             const posts = await svc.listPosts(params)
             return posts
         } catch(error) {
             return error
         }
-        
     }
 }

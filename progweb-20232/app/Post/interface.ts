@@ -9,7 +9,7 @@ export type PostType = {
 }
 
 export type PostParamsType = {
-    user_id?: number;
+    user_id?: string;
     title?: string;
 }
 
@@ -21,23 +21,23 @@ export const PostCreateRequest = schema.create({
         rules.maxLength(200),
         rules.required()
     ]),
-    text: schema.string({ trim: true }, [
+    text: schema.string.optional({ trim: true }, [
         rules.maxLength(800)
     ]),
-    thumb: schema.string({ trim: true }, [
+    thumb: schema.string.optional({ trim: true }, [
         rules.maxLength(300)
     ]),
 })
 
 export const PostParams = schema.create({
-    user_id: schema.number(),
-    title: schema.string({ trim: true }, [
+    user_id: schema.number.optional(),
+    title: schema.string.optional({ trim: true }, [
         rules.maxLength(200),
     ])
 })
 
 export const PostUpdateRequest = schema.create({
-    id: schema.number(),
+    id: schema.number.optional(),
     user_id: schema.number([
         rules.required()
     ]),
@@ -45,10 +45,10 @@ export const PostUpdateRequest = schema.create({
         rules.maxLength(200),
         rules.required()
     ]),
-    text: schema.string({ trim: true }, [
+    text: schema.string.optional({ trim: true }, [
         rules.maxLength(800)
     ]),
-    thumb: schema.string({ trim: true }, [
+    thumb: schema.string.optional({ trim: true }, [
         rules.maxLength(300)
     ]),
 })

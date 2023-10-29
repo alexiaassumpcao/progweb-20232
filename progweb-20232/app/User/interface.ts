@@ -17,13 +17,13 @@ export const UserCreateRequestSchema = schema.create({
         rules.maxLength(200),
         rules.required()
     ]),
-    description: schema.string({ trim: true }, [
+    description: schema.string.optional({ trim: true }, [
         rules.maxLength(300)
     ]),
   })
 
   export const UserUpdateRequestSchema = schema.create({
-    id: schema.number(),
+    id: schema.number.optional(),
     name: schema.string({ trim: true }, [
         rules.maxLength(180),
         rules.required()
@@ -33,7 +33,7 @@ export const UserCreateRequestSchema = schema.create({
         rules.maxLength(200),
         rules.required()
     ]),
-    description: schema.string({ trim: true }, [
+    description: schema.string.optional({ trim: true }, [
         rules.maxLength(300)
     ]),
   })
