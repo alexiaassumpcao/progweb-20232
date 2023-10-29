@@ -7,5 +7,5 @@ export const CriaRotaUser = () => {
         Route.patch('/:id', 'controller.update').as('update')
         Route.get('/:id', 'controller.getByID').as('getByID')
         Route.delete('/:id', 'controller.deleteByID').as('deleteByID')
-    }).prefix('/users').as('users').namespace('App/Usuario');
+    }).prefix('/users').as('users').namespace('App/User');
 }

@@ -14,6 +14,7 @@ export class UserService {
             return user.id
         } catch (error) {
             console.error("error on create user service: ", error)
+            return error
         }
     }
 
@@ -23,6 +24,7 @@ export class UserService {
             return user
         } catch (error) {
             console.error("error on update user service: ", error)
+            return error
         }
     }
 
@@ -32,6 +34,7 @@ export class UserService {
             return users
         } catch (error) {
             console.error("error on list users service: ", error)
+            return error
         }
     }
 
@@ -41,6 +44,7 @@ export class UserService {
             return user as User;
         } catch (error) {
             console.error("error on get user by id service: ", error)
+            return error
         }
     }
 
@@ -49,6 +53,7 @@ export class UserService {
             await this.repository.delete(userID)
         } catch(error) {
             console.error("error on delete user service: ", error)
+            return error
         }
     }
 }
