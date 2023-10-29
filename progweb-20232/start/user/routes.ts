@@ -1,6 +1,6 @@
 import Route from '@ioc:Adonis/Core/Route'
 
-export const CriaRotaUser = () => {
+export const CreateUserRoutes = () => {
     Route.group(() => {
         Route.get('/', 'controller.list').as('list')
         Route.post('/', 'controller.create').as('create')
