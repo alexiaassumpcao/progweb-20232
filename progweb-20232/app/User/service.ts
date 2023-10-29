@@ -8,10 +8,10 @@ export class UserService {
         this.repository = repo
     }
 
-    async createUser(newUser: UserType) : Promise<number | undefined>{
+    async createUser(newUser: UserType) : Promise<User | undefined>{
         try {
             const user = await this.repository.create(newUser)
-            return user.id
+            return user
         } catch (error) {
             console.error("error on create user service: ", error)
             return error

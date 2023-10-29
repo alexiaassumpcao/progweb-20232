@@ -2,21 +2,14 @@ import Route from '@ioc:Adonis/Core/Route'
 
 export const CriaRotaAuth = () => {
     Route.group(() => {
-        Route.get('/', 'controller.index').as('index')
+        Route.post('/', 'controller.create').as('create')
+        Route.get('/:id', 'controller.getByID').as('getByID')
+        Route.patch('/:id', 'controller.update').as('update')
+        Route.delete('/:id', 'controller.deleteByID').as('deleteByID')
 
-        Route.post('login', async ({ auth, request, response }) => {
-            const email = request.input('email')
-            const password = request.input('password')
-    
-            try {
-                await auth.use('web').attempt(email, password)
-                response.redirect('/')
-            } catch {
-                return response.badRequest('Invalid credentials')
-            }
-    })
+        Route.post('/login', 'controller.login').as('login')
 
-    }).prefix('/auths').namespace('App/Auth');
+    }).prefix('/auths').as("auths").namespace('App/Auth');
 
 
 
