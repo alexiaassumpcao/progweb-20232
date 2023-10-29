@@ -1,3 +1,12 @@
+node_modules
+progweb-20232
+build
+coverage
+.vscode
+.DS_STORE
+.env
+tmp
+
 # Logs
 logs
 *.log
@@ -128,3 +137,4 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
