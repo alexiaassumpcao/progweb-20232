@@ -23,12 +23,20 @@ import { CriaRotaAuth } from './auth/routes'
 import { CriaRotaUser } from './user/routes'
 
 Route.get('/', async ({ view }) => {
-  return view.render('welcome')
+  return view.render('users/welcome')
 })
 
 
 Route.get('/health', async ({ response }) => {
   return response.send('OK')
+})
+
+Route.get('/login', async ({ view }) => {
+  return view.render('users/login')
+})
+
+Route.get('/register', async ({ view }) => {
+  return view.render('users/register')
 })
 
 

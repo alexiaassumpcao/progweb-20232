@@ -17,3 +17,13 @@ node ace list:routes
 ```
 node ace serve --watch
 ```
+
+### tailwind
+```
+npm install -D tailwindcss
+```
+
+### flowbite
+```
+npm install flowbite
+```
