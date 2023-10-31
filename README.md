@@ -27,3 +27,8 @@ npm install -D tailwindcss
 ```
 npm install flowbite
 ```
+
+### para criar novo modelo com migration e factory
+```
+node ace make:model User -m -f
+```

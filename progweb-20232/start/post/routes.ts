@@ -1,13 +1,11 @@
 import Route from '@ioc:Adonis/Core/Route'
 
-export const CreateAuthRoutes = () => {
+export const CreatePostRoutes = () => {
     Route.group(() => {
+        Route.get('/', 'controller.list').as('list')
         Route.post('/', 'controller.create').as('create')
-        Route.get('/:id', 'controller.getByID').as('getByID')
         Route.patch('/:id', 'controller.update').as('update')
+        Route.get('/:id', 'controller.getByID').as('getByID')
         Route.delete('/:id', 'controller.deleteByID').as('deleteByID')
-
-        Route.post('/login', 'controller.login').as('login')
-
-    }).prefix('/auths').as("auths").namespace('App/Auth');
+    }).prefix('/posts').as('posts').namespace('App/Post');
 }
