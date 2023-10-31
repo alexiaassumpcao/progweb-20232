@@ -7,5 +7,5 @@ export const CreatePostRoutes = () => {
         Route.patch('/:id', 'controller.update').as('update')
         Route.get('/:id', 'controller.getByID').as('getByID')
         Route.delete('/:id', 'controller.deleteByID').as('deleteByID')
-    }).prefix('/posts').as('posts').namespace('App/Post');
+    }).prefix('/posts').as('postsv1').namespace('App/Post');
 }

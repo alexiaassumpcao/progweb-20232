@@ -9,5 +9,5 @@ export const CreateAuthRoutes = () => {
 
         Route.post('/login', 'controller.login').as('login')
 
-    }).prefix('/auths').as("auths").namespace('App/Auth');
+    }).prefix('/auths').as("authsv1").namespace('App/Auth');
 }

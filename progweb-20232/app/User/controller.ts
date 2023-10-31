@@ -1,6 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { CreateUserService } from "./utils";
-import { UserCreateRequestSchema, UserUpdateRequestSchema } from './interface';
+import { UserCreateRequestSchema, UserType, UserUpdateRequestSchema } from './interface';
 
 export default class UserController {
     public async create({ request, response }: HttpContextContract) {
@@ -8,7 +8,7 @@ export default class UserController {
             const newUser = await request.validate({ schema: UserCreateRequestSchema })
             const svc = CreateUserService()
         
-            const result = svc.createUser(newUser)
+            const result = svc.createUser(newUser as UserType)
             response.status(201)
             return result
         } catch (error) {
@@ -23,7 +23,7 @@ export default class UserController {
             var userToUpdate = await request.validate({ schema: UserUpdateRequestSchema })
             userToUpdate.id = parseInt(params.id)
         
-            const result = svc.updateUser(userToUpdate)
+            const result = svc.updateUser(userToUpdate as UserType)
             response.status(200)
             return result
         } catch(error) {
