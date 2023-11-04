@@ -7,7 +7,7 @@ export default class Auth extends BaseModel {
   public id: number
 
   @column()
-  public idUser: number
+  public user_id: number
 
   @column()
   public email: string
