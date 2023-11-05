@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { rules, schema } from "@ioc:Adonis/Core/Validator";
 
 export type AuthType = {

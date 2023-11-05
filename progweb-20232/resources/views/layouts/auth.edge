@@ -22,12 +22,8 @@
     @else
         @include('components/navbar')
     @endif
-    
-    @if(auth.isAuthenticated)
-        @include('components/fav-posts')
-    @else
-        @include('components/card')
-    @endif
+   
+    @include('components/auth-register')
 
     <footer class="footer fixed bottom-0">
         @include('components/footer')

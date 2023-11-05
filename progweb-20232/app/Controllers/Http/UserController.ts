@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { CreateUserService } from "./utils";
-import { UserCreateRequestSchema, UserUpdateRequestSchema } from './interface';
+import { CreateUserService } from "../../User/utils";
+import { UserCreateRequestSchema, UserUpdateRequestSchema } from '../../User/interface';
 
 export default class UserController {
     public async create({ request, response }: HttpContextContract) {

@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { PostCreateRequest, PostParams, PostUpdateRequest } from './interface'
-import { CreatePostService } from './utils'
+import { PostCreateRequest, PostParams, PostUpdateRequest } from '../../Post/interface'
+import { CreatePostService } from '../../Post/utils'
 
 export default class PostController {
     public async create({ request, response }: HttpContextContract) {

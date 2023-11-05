@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { CreateAuthService } from "./utils";
-import { AuthCreateRequest, AuthUpdateRequest } from "./interface";
+import { CreateAuthService } from "../../Auth/utils";
+import { AuthCreateRequest, AuthUpdateRequest } from "../../Auth/interface";
 
 export default class AuthController {
     public async create({ request, response } : HttpContextContract) {
@@ -63,5 +63,5 @@ export default class AuthController {
         } catch {
             return response.badRequest('Invalid credentials')
         }
-}
+    }
 }

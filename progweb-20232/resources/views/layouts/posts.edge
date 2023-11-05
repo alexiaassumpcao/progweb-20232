@@ -23,7 +23,11 @@
         @include('components/navbar')
     @endif
 
-    @include('components/card')
+    @if(auth.isAuthenticated)
+        @include('components/list-posts')
+    @else
+        @include('components/card')
+    @endif
     
     <footer class="footer fixed bottom-0">
         @include('components/footer')

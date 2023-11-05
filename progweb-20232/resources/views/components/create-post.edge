@@ -20,8 +20,8 @@
             </div>
             <!-- Modal body -->
             <div class="p-6  text-base leading-relaxed text-gray-500 dark:text-gray-400">
-               <!-- Form --> 
-               <form class="space-y-3" action="#" method="POST">
+                <!-- Form --> 
+                <form class="space-y-3" action="{{route('post.create')}}" method="POST">
                     <label for="title" class="block text-sm font-medium text-gray-900 dark:text-white">Título</label>
                     <textarea id="title" rows="1" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Título do seu texto"></textarea>
 
@@ -29,12 +29,13 @@
                     <textarea id="text" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Escreva seu texto..."></textarea>
 
                     <label for="text" class="block text-sm font-medium text-gray-900 dark:text-white">Thumb</label>
-               </form>
+
+                    <!-- Modal footer -->
+                    <div class="flex items-center justify-center space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+                        <button type="submit" class="mt-6 mb-6 w-30 text-gray-700 text-center justify-center bg-gradient-to-br from-blue to-green hover:bg-gradient-to-bl dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Enviar</button>
+                    </div>  
+                </form>
             </div>
-            <!-- Modal footer -->
-            <div class="flex items-center justify-center space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
-                <button type="submit" class="mt-6 mb-6 w-30 text-gray-700 text-center justify-center bg-gradient-to-br from-blue to-green hover:bg-gradient-to-bl dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Enviar</button>
-            </div>     
         </div>
     </div>
 </div>

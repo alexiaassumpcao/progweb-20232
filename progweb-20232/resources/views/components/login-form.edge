@@ -1,5 +1,5 @@
 <section class="bg-gray dark:bg-black w-screen h-screen">
-  <form class="space-y-6" action="#" method="POST">
+  <form class="space-y-6" action="{{route('auth.login')}}" method="POST">
     <div class="flex flex-col flex-shrink-0 overflow-hidden items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
       <div class="w-full bg-white rounded-lg border border-gray-200 shadow-md dark:border md:mt-0 sm:max-w-md xl:p- dark:bg-gray-800 dark:border-gray-700">
         <h2 class="mt-5 text-center text-2xl font-sans leading-9 tracking-tight text-gray-900 dark:text-white">Entre na sua conta</h2>
@@ -12,13 +12,13 @@
           </div>
           <div>
             <div class="flex items-center justify-between">
-              <label for="senha" class="pt-2 block text-sm font-medium leading-6 text-gray-900 dark:text-white">Senha</label>
+              <label for="password" class="pt-2 block text-sm font-medium leading-6 text-gray-900 dark:text-white">Senha</label>
             </div>
             <div class="mt-2">
-              <input id="senha" name="senha" type="password" autocomplete="senha" required class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <input id="password" name="password" type="password" autocomplete="password" required="" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             </div>
             <div class="text-sm mt-2 text-end">
-              <a href="/reset" class="font-medium text-gray-500 dark:text-gray-300 hover:underline">Esqueceu a senha?</a>
+              <a href="/" class="font-medium text-gray-500 dark:text-gray-300 hover:underline">Esqueceu a senha?</a>
             </div>
           </div>
           <div class="flex justify-center">
