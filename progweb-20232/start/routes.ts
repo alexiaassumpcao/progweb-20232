@@ -2,6 +2,8 @@ import Route from '@ioc:Adonis/Core/Route'
 import { CreateAuthRoutes } from './auth/routes'
 import { CreateUserRoutes } from './user/routes'
 import { CreatePostRoutes } from './post/routes'
+import Post from 'App/Models/Post'
+import User from 'App/Models/User'
 
 Route.get('/', async ({ view }) => {
   return view.render('users/welcome')
@@ -22,6 +24,7 @@ Route.get('/register', async ({ view }) => {
 })
 
 Route.post('/register', 'UserController.create').as('user.create')
+Route.patch('/register/:id', 'UserController.update').as('user.update')
 
 Route.post('/post', 'PostController.create').as('post.create')
 
@@ -41,12 +44,28 @@ Route.get('/favposts', async ({ view }) => {
   return view.render('users/fav-posts')
 })
 
-Route.get('/posts', async ({ view }) => {
-  return view.render('users/posts')
+Route.get('/posts', async ({ view, auth }) => {
+  if (auth.isAuthenticated) {
+    const posts = await Post.all()
+
+    return view.render('users/posts', { posts: posts })
+  }
 })
 
-Route.get('/profile', async ({ view }) => {
-  return view.render('users/profile')
+Route.get('/posts/:id', async ({ view, auth, params }) => {
+  if (auth.isAuthenticated) {
+
+    const post = await Post.findOrFail(params.id)
+
+    return view.render('users/show', { post: post })
+  }
+}).as('posts.show')
+
+Route.get('/profile', async ({ view, auth }) => {
+  if(auth.isAuthenticated) {
+    const user = await User.findByOrFail('id',auth.user?.id) 
+    return view.render('users/profile', { user: user })
+  }
 })
 
 

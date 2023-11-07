@@ -16,7 +16,7 @@
         </script>
     </head>
     @!section('body')
-    @set('user', user)
+    @set('post', post)
 
     @if(auth.isAuthenticated)
         @include('components/navbar-user')
@@ -24,7 +24,7 @@
         @include('components/navbar')
     @endif
 
-    @include('components/edit-profile')
+    @include('components/show-post')
     
     <footer class="footer fixed bottom-0">
         @include('components/footer')
