@@ -28,6 +28,16 @@ export class UserService {
         }
     }
 
+    async getUserByEmail(email: string) :Promise<User | undefined> {
+        try {
+            const user = await this.repository.findByEmail(email)
+            return user as User
+        } catch (error) {
+            console.error("error on get user by email service: ", error)
+            return error
+        }
+    }
+
     async listUsers(): Promise<User[] | undefined> {
         try {
             const users = await this.repository.list()

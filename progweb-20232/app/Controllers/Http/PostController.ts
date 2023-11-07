@@ -1,63 +1,91 @@
 /* eslint-disable prettier/prettier */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { PostCreateRequest, PostParams, PostUpdateRequest } from '../../Post/interface'
+import { PostCreateRequest, PostType, PostUpdateRequest } from '../../Post/interface'
 import { CreatePostService } from '../../Post/utils'
 
 export default class PostController {
-    public async create({ request, response }: HttpContextContract) {
+    public async create({ request, response, auth }: HttpContextContract) {
         try {
-            const newPost = await request.validate({ schema: PostCreateRequest})
-            const svc = CreatePostService()
-            const createdPost = await svc.createPost(newPost)
-            response.status(201)
-            return createdPost
+            if (auth.isAuthenticated) {
+                var newPost = await request.validate({ schema: PostCreateRequest})
+                newPost.user_id = auth.user?.id
+                const svc = CreatePostService()
+                const createdPost = await svc.createPost(newPost as PostType)
+                response.status(201)
+                return createdPost
+            } else {
+                response.status(401)
+                response.send("Unauthorized")
+            }
         } catch (error) {
             return error
         }
     }
 
-    public async update({ params, request, response }: HttpContextContract) {
+    public async update({ params, request, response, auth }: HttpContextContract) {
         try {
-            var postToUpdate = await request.validate({ schema: PostUpdateRequest })
-            postToUpdate.id = parseInt(params.id)
-            const svc = CreatePostService()
-            const postUpdated = await svc.updatePost(postToUpdate)
-            response.status(200)
-            return postUpdated
+            if (auth.isAuthenticated) {
+                var postToUpdate = await request.validate({ schema: PostUpdateRequest })
+                postToUpdate.id = parseInt(params.id)
+                postToUpdate.user_id = auth.user?.id
+                const svc = CreatePostService()
+                const postUpdated = await svc.updatePost(postToUpdate as PostType)
+                response.status(200)
+                return postUpdated
+            } else {
+                response.status(401)
+                response.send("Unauthorized")
+            }
+           
         } catch(error) {
             return error
         }
     }
 
-    public async getByID({ params }: HttpContextContract) {
+    public async getByID({ params, auth, response }: HttpContextContract) {
         try {
-            const id = parseInt(params.id)
-            const svc = CreatePostService()
-            const post = await svc.getPostByID(id)
-            return post
+            if(auth.isAuthenticated) {
+                const id = parseInt(params.id)
+                const svc = CreatePostService()
+                const post = await svc.getPostByID(id)
+                return post
+            } else {
+                response.status(401)
+                response.send("Unauthorized")
+            }
         } catch(error) {
             return error
         }
     }
 
-    public async deleteByID({ params, response }: HttpContextContract) {
+    public async deleteByID({ params, response, auth }: HttpContextContract) {
         try {
-            const id = parseInt(params.id)
-            const svc = CreatePostService()
-            await svc.deletePostByID(id)
-            response.status(204)
+            if (auth.isAuthenticated) {
+                const id = parseInt(params.id)
+                const svc = CreatePostService()
+                await svc.deletePostByID(id)
+                response.status(204)
+            } else {
+                response.status(401)
+                response.send("Unauthorized")
+            }
         } catch (error) {
             return error
         }
     }
 
-    public async list({ request }: HttpContextContract) {
+    public async list({ request, auth, response }: HttpContextContract) {
         try {
-            const params = await request.qs()
-            const svc = CreatePostService()
-            
-            const posts = await svc.listPosts(params)
-            return posts
+            if(auth.isAuthenticated) {
+                const params = await request.qs()
+                const svc = CreatePostService()
+                
+                const posts = await svc.listPosts(params)
+                return posts
+            } else {
+                response.status(401)
+                response.send("Unauthorized")
+            }
         } catch(error) {
             return error
         }

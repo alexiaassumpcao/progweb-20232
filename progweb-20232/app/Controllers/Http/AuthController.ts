@@ -2,15 +2,21 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { CreateAuthService } from "../../Auth/utils";
 import { AuthCreateRequest, AuthUpdateRequest } from "../../Auth/interface";
+import { CreateUserService } from 'App/User/utils';
 
 export default class AuthController {
     public async create({ request, response } : HttpContextContract) {
+        const userSvc = CreateUserService()
+        const svc = CreateAuthService()
         try {
-            const newAuth = await request.validate({ schema: AuthCreateRequest })
-            const svc = CreateAuthService()
+            var newAuth = await request.validate({ schema: AuthCreateRequest })
+            const user = await userSvc.getUserByEmail(newAuth.email)
+            newAuth.user_id = user?.id
+            
             const auth = await svc.createAuth(newAuth)
-            response.status(201)
-            return auth
+            if (auth != undefined) {
+                response.redirect('/login')
+            }
         } catch(error) {
             return error
         }   
@@ -41,12 +47,17 @@ export default class AuthController {
         }
     }
 
-    public async deleteByID({ params, response }: HttpContextContract) {
+    public async deleteByID({ params, response ,auth }: HttpContextContract) {
         try {
-            const id = parseInt(params.id)
-            const svc = CreateAuthService()
-            await svc.deleteAuthByID(id)
-            response.status(204)
+            if(auth.isAuthenticated) {
+                const id = parseInt(params.id)
+                const svc = CreateAuthService()
+                await svc.deleteAuthByID(id)
+                response.status(204)
+            } else {
+                response.status(401)
+                response.send("Unauthorized")
+            }
         } catch(error) {
             return error
         }
@@ -55,7 +66,6 @@ export default class AuthController {
     public async login({ auth, request, response }: HttpContextContract) {
         const email = request.input('email')
         const password = request.input('password')
-        console.log(email + " senha: " + password)
 
         try {
             await auth.use('web').attempt(email, password)

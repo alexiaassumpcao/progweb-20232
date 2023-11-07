@@ -3,15 +3,13 @@ import { rules, schema } from "@ioc:Adonis/Core/Validator";
 
 export type AuthType = {
     id?: number;
-    user_id: number;
+    user_id?: number;
     email: string;
     password: string;
 };
 
 export const AuthCreateRequest = schema.create({
-    user_id: schema.number([
-        rules.required()
-    ]),
+    user_id: schema.number.optional(),
     email: schema.string({ trim: true }, [
         rules.email(),
         rules.maxLength(255),

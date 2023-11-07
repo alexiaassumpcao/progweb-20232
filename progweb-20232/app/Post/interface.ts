@@ -14,9 +14,7 @@ export type PostParamsType = {
 }
 
 export const PostCreateRequest = schema.create({
-    user_id: schema.number([
-        rules.required()
-    ]),
+    user_id: schema.number.optional(),
     title: schema.string({ trim: true }, [
         rules.maxLength(200),
         rules.required()
@@ -38,9 +36,7 @@ export const PostParams = schema.create({
 
 export const PostUpdateRequest = schema.create({
     id: schema.number.optional(),
-    user_id: schema.number([
-        rules.required()
-    ]),
+    user_id: schema.number.optional(),
     title: schema.string({ trim: true }, [
         rules.maxLength(200),
         rules.required()

@@ -2,7 +2,6 @@ import Route from '@ioc:Adonis/Core/Route'
 import { CreateAuthRoutes } from './auth/routes'
 import { CreateUserRoutes } from './user/routes'
 import { CreatePostRoutes } from './post/routes'
-import AuthController from 'App/Controllers/Http/AuthController'
 
 Route.get('/', async ({ view }) => {
   return view.render('users/welcome')
@@ -29,6 +28,13 @@ Route.post('/post', 'PostController.create').as('post.create')
 Route.get('/auth', async ({ view }) => {
   return view.render('users/auth')
 })
+
+Route.post('/auth', 'AuthController.create').as('auth.create')
+
+Route.post('/logout', async ({ auth, response }) => {
+  await auth.use('web').logout()
+  response.redirect('/login')
+}).as('auth.logout')
 
 
 Route.get('/favposts', async ({ view }) => {
