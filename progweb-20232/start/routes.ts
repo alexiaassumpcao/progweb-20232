@@ -34,10 +34,7 @@ Route.get('/auth', async ({ view }) => {
 
 Route.post('/auth', 'AuthController.create').as('auth.create')
 
-Route.post('/logout', async ({ auth, response }) => {
-  await auth.use('web').logout()
-  response.redirect('/login')
-}).as('auth.logout')
+Route.post('/logout', 'AuthController.logout').as('auth.logout')
 
 
 Route.get('/favposts', async ({ view }) => {
@@ -46,7 +43,7 @@ Route.get('/favposts', async ({ view }) => {
 
 Route.get('/posts', async ({ view, auth }) => {
   if (auth.isAuthenticated) {
-    const posts = await Post.all()
+    const posts = await Post.query().where("user_id", auth.user?.id as number)
 
     return view.render('users/posts', { posts: posts })
   }

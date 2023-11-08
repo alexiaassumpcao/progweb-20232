@@ -15,7 +15,7 @@ export default class AuthController {
             
             const auth = await svc.createAuth(newAuth)
             if (auth != undefined) {
-                response.redirect('/login')
+                return response.redirect('/login')
             }
         } catch(error) {
             return error
@@ -73,5 +73,10 @@ export default class AuthController {
         } catch {
             return response.badRequest('Invalid credentials')
         }
+    }
+
+    public async logout({ auth, response }: HttpContextContract){
+        await auth.use('web').logout()
+        return response.redirect('/login')
     }
 }

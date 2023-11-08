@@ -11,8 +11,9 @@ export default class PostController {
                 newPost.user_id = auth.user?.id
                 const svc = CreatePostService()
                 const createdPost = await svc.createPost(newPost as PostType)
-                response.status(201)
-                return createdPost
+                if (createdPost != undefined) {
+                    return response.redirect('/posts')
+                }
             } else {
                 response.status(401)
                 response.send("Unauthorized")

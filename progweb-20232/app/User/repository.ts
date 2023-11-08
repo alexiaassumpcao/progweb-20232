@@ -2,8 +2,8 @@ import User from "App/Models/User"
 import { UserType } from "App/User/interface"
 
 export class UserRepository {
-    idField: "id"
-    emailField: "email"
+    idField = "id"
+    emailField = "email"
     async list():Promise<User[]> {
         const users = await User.all()
         return users
