@@ -60,7 +60,7 @@ Route.get('/posts/:id', async ({ view, auth, params }) => {
 
 Route.get('/profile', async ({ view, auth }) => {
   if(auth.isAuthenticated) {
-    const user = await User.findByOrFail('id',auth.user?.id) 
+    const user = await User.findByOrFail('email',auth.user?.email) 
     return view.render('users/profile', { user: user })
   }
 })
