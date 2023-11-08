@@ -38,14 +38,14 @@ Route.post('/logout', 'AuthController.logout').as('auth.logout')
 
 
 Route.get('/favposts', async ({ view }) => {
-  return view.render('users/fav-posts')
+  return view.render('posts/fav-posts')
 })
 
 Route.get('/posts', async ({ view, auth }) => {
   if (auth.isAuthenticated) {
     const posts = await Post.query().where("user_id", auth.user?.id as number)
 
-    return view.render('users/posts', { posts: posts })
+    return view.render('posts/posts', { posts: posts })
   }
 })
 
@@ -54,7 +54,7 @@ Route.get('/posts/:id', async ({ view, auth, params }) => {
 
     const post = await Post.findOrFail(params.id)
 
-    return view.render('users/show', { post: post })
+    return view.render('posts/show', { post: post })
   }
 }).as('posts.show')
 
