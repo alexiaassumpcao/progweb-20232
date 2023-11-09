@@ -2,6 +2,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { CreateUserService } from "../../User/utils";
 import { UserCreateRequestSchema, UserType, UserUpdateRequestSchema } from '../../User/interface';
+import { CreateAuthService } from 'App/Auth/utils';
 
 export default class UserController {
     public async create({ request, response }: HttpContextContract) {
@@ -23,13 +24,18 @@ export default class UserController {
         try {
             if(auth.isAuthenticated) {
                 const svc = CreateUserService()
+                const password = request.input("password")
 
                 var userToUpdate = await request.validate({ schema: UserUpdateRequestSchema })
                 userToUpdate.id = parseInt(params.id)
             
-                const result =await svc.updateUser(userToUpdate as UserType)
-                response.status(200)
-                return result
+                await svc.updateUser(userToUpdate as UserType)
+
+                if (password != undefined && password != "undefined") {
+                    const authSvc = CreateAuthService()
+                    await authSvc.updatePasswordAuth(auth.user?.email as string, password)
+                }
+                return response.redirect("/posts")
             } else {
                 response.status(401)
                 response.send("Unauthorized")

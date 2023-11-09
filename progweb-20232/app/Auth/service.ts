@@ -38,6 +38,16 @@ export class AuthService {
         }  
     }
 
+    async updatePasswordAuth(email: string, password: string): Promise<Auth | undefined> {
+        try {
+            const updatedAuth = await this.repository.updatePassword(email, password)
+            return updatedAuth
+        } catch (error) {
+            console.error("error on update password auth service: ", error)
+            return error
+        }  
+    }
+
     async getAuthByID(authID: number): Promise<Auth | undefined> {
         try {
             const auth = await this.repository.getAuthByID(authID)

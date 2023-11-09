@@ -15,7 +15,6 @@ export class UserRepository {
     }
 
     async findByEmail(email: string): Promise<User | null> {
-        console.log(this.emailField)
         const user = await User.findByOrFail(this.emailField, email)
         return user
     }

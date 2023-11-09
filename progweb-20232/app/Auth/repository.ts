@@ -29,6 +29,18 @@ export class AuthRepository {
         return updatedAuth
     }
 
+    async updatePassword(email: string, password: string) :Promise<Auth> {
+        const auth = await Auth.findByOrFail("email", email)
+        const authToupdate = {
+            user_id: auth.user_id,
+            id: auth.id,
+            email: auth.email,
+            password: password,
+        }
+        const updatedAuth = await Auth.updateOrCreate({ id: auth.id }, authToupdate)
+        return updatedAuth
+    }
+
     async delete(authID: number){
         const auth = await Auth.findByOrFail(this.idField, authID)
         await auth.delete()

@@ -24,7 +24,7 @@ Route.get('/register', async ({ view }) => {
 })
 
 Route.post('/register', 'UserController.create').as('user.create')
-Route.patch('/register/:id', 'UserController.update').as('user.update')
+Route.post('/register/:id', 'UserController.update').as('user.patch')
 
 Route.post('/post', 'PostController.create').as('post.create')
 
