@@ -29,7 +29,7 @@ export class PostRepository {
     }
 
     async update(postToUpdate: PostType): Promise<Post> {
-        return await Post.updateOrCreate(postToUpdate, postToUpdate)
+        return await Post.updateOrCreate({ id: postToUpdate.id }, postToUpdate)
     }
 
     async delete(postID: number) {

@@ -4,6 +4,7 @@ import { AuthType } from 'App/Auth/interface'
 export class AuthRepository {
     idField= "id"
     userIdField = "user_id"
+    emailField = "email"
     async listAuths():Promise<Auth[]> {
         const auths = await Auth.all()
         return auths
@@ -25,12 +26,12 @@ export class AuthRepository {
     }
 
     async update(authToUpdate: AuthType) :Promise<Auth> {
-        const updatedAuth = await Auth.updateOrCreate(authToUpdate, authToUpdate)
+        const updatedAuth = await Auth.updateOrCreate({ id: authToUpdate.id }, authToUpdate)
         return updatedAuth
     }
 
     async updatePassword(email: string, password: string) :Promise<Auth> {
-        const auth = await Auth.findByOrFail("email", email)
+        const auth = await Auth.findByOrFail(this.emailField, email)
         const authToupdate = {
             user_id: auth.user_id,
             id: auth.id,

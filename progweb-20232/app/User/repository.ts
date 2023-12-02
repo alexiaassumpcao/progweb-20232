@@ -25,7 +25,7 @@ export class UserRepository {
     }
 
     async update(userToUpdate: UserType): Promise<User> {
-        const userUpdated = await User.updateOrCreate(userToUpdate, userToUpdate)
+        const userUpdated = await User.updateOrCreate({ id: userToUpdate.id }, userToUpdate)
         return userUpdated
     }
 

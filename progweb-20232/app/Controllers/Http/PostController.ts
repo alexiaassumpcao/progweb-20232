@@ -28,7 +28,7 @@ export default class PostController {
             if (auth.isAuthenticated) {
                 var postToUpdate = await request.validate({ schema: PostUpdateRequest })
                 postToUpdate.id = parseInt(params.id)
-                postToUpdate.user_id = auth.user?.id
+                postToUpdate.user_id = auth.user?.user_id
                 const svc = CreatePostService()
                 const postUpdated = await svc.updatePost(postToUpdate as PostType)
                 response.status(200)
