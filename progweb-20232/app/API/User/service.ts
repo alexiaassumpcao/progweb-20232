@@ -1,6 +1,6 @@
 import User from "App/Models/User";
 import { UserRepository } from "./repository";
-import { UserType } from "App/User/interface";
+import { UserType } from "App/API/User/interface";
 
 export class UserService {
     repository: UserRepository;

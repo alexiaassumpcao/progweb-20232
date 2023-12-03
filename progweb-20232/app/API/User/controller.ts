@@ -1,10 +1,10 @@
 /* eslint-disable prettier/prettier */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { CreateUserService } from "../../User/utils";
-import { UserCreateRequestSchema, UserType, UserUpdateRequestSchema } from '../../User/interface';
-import { CreateAuthService } from 'App/Auth/utils';
+import { CreateUserService } from "../../API/User/utils";
+import { UserCreateRequestSchema, UserType, UserUpdateRequestSchema } from '../../API/User/interface';
+import { CreateAuthService } from 'App/API/Auth/utils';
 
-export default class UserController {
+export default class CustomUserController {
     public async create({ request, response }: HttpContextContract) {
         try {
             const newUser = await request.validate({ schema: UserCreateRequestSchema })

@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { PostCreateRequest, PostType, PostUpdateRequest } from '../../Post/interface'
-import { CreatePostService } from '../../Post/utils'
+import { PostCreateRequest, PostType, PostUpdateRequest } from '../../API/Post/interface'
+import { CreatePostService } from '../../API/Post/utils'
 
-export default class PostController {
+export default class CustomPostController {
     public async create({ request, response, auth }: HttpContextContract) {
         try {
             if (auth.isAuthenticated) {

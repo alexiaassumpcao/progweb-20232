@@ -1,5 +1,5 @@
 import Auth from 'App/Models/Auth'
-import { AuthType } from 'App/Auth/interface'
+import { AuthType } from 'App/API/Auth/interface'
 
 export class AuthRepository {
     idField= "id"
