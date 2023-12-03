@@ -91,4 +91,57 @@ export default class CustomPostController {
             return error
         }
     }
+
+    public async favPost({ auth, response, params }: HttpContextContract) {
+        try {
+            if(auth.isAuthenticated) {
+                const postId = parseInt(params.id)
+                const userId = auth.user?.user_id as number
+
+                const svc = CreatePostService()
+                await svc.favPost(userId, postId)
+                response.status(204)
+            } else {
+                response.status(401)
+                response.send("Unauthorized")
+            }
+        } catch(error) {
+            return error
+        }
+    }
+
+    public async listFavPosts({ auth, response }: HttpContextContract) {
+        try {
+            if(auth.isAuthenticated) {
+                const userId = auth.user?.user_id as number
+
+                const svc = CreatePostService()
+                const list = await svc.listFavpost(userId)
+                return list
+            } else{
+                response.status(401)
+                response.send("Unauthorized")
+            }
+        } catch(error) {
+            return error
+        }
+    }
+
+    public async isFavPost({ auth, response, params }: HttpContextContract) {
+        try {
+            if(auth.isAuthenticated) {
+                const postId = parseInt(params.id)
+                const userId = auth.user?.user_id as number
+
+                const svc = CreatePostService()
+                const result = await svc.isFavPost(userId, postId)
+                return result
+            } else {
+                response.status(401)
+                response.send("Unauthorized")
+            }
+        } catch(error) {
+            return error
+        }
+    }
 }
