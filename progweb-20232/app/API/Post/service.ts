@@ -1,6 +1,8 @@
 import Post from "App/Models/Post";
 import { PostParamsType, PostType } from "./interface";
 import { PostRepository } from "./repository";
+import File from "App/Models/File";
+import Application from '@ioc:Adonis/Core/Application'
 
 export class PostService {
     repository: PostRepository;
@@ -88,4 +90,23 @@ export class PostService {
             return error
         }
     }
+        public async createThumb(data: any) {
+          await data.move(Application.tmpPath('uploads'))
+      
+          const file = new File()
+          file.fileName = data.fileName
+      
+          await file.save()
+      
+          return file
+        }
+        public async getThumb(thumb: number) {
+            try {
+                const thumbFound = await this.repository.findThumb(thumb)
+                return thumbFound
+            } catch(error) {
+                console.error("error on get thumb service: ", error)
+                return error
+            }
+        }
 }

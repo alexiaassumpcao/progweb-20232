@@ -2,6 +2,7 @@ import Post from "App/Models/Post";
 import { PostParamsType, PostType } from "./interface";
 import FavPost from "App/Models/FavPost";
 import { DateTime } from "luxon";
+import File from "App/Models/File";
 
 
 export class PostRepository {
@@ -64,5 +65,8 @@ export class PostRepository {
         const favPost = await FavPost.find({ user_id: userID, post_id: postID })
         return favPost !== null
     }
-
+    async findThumb(thumb: number) {
+        const thumbFound = await File.findOrFail(thumb)
+        return thumbFound
+    }
 }
