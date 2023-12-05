@@ -1,9 +1,19 @@
 import Route from '@ioc:Adonis/Core/Route'
-import { CreateAuthRoutes } from './auth/routes'
-import { CreateUserRoutes } from './user/routes'
-import { CreatePostRoutes } from './post/routes'
-import Post from 'App/Models/Post'
-import User from 'App/Models/User'
+import CustomAuthController from 'App/API/Auth/controller'
+import CustomPostController from 'App/API/Post/controller'
+import CustomUserController from 'App/API/User/controller'
+import WebCustomPostController from 'App/Web/Posts'
+import WebCustomUserController from 'App/Web/Users'
+
+// Web controllers
+const webCustomUserController = new WebCustomUserController()
+const webCustomPostController = new WebCustomPostController()
+
+// API controllers
+const customAuthController = new CustomAuthController()
+const customUserController = new CustomUserController()
+const customPostController = new CustomPostController()
+
 
 Route.get('/', async ({ view }) => {
   return view.render('users/welcome')
@@ -13,61 +23,35 @@ Route.get('/health', async ({ response }) => {
   return response.send('OK')
 })
 
-Route.get('/login', async ({ view }) => {
-  return view.render('users/login')
-})
+// routes related to auth
+Route.get('/login', webCustomUserController.login).as('webauth.login')
+Route.post('/login', customAuthController.login).as('auth.login')
+Route.post('/logout', customAuthController.logout).as('auth.logout')
+Route.get('/auth', webCustomUserController.createAuth).as('webauth.create')
+Route.post('/auth', customAuthController.create).as('auth.create')
 
-Route.post('/login', 'AuthController.login').as('auth.login')
+// routes related to users
+Route.get('/register', webCustomUserController.register).as('webauth.register')
+Route.post('/register', customUserController.create).as('user.create')
+Route.post('/register/:id', customUserController.update).as('user.patch')
+Route.delete('/register/:id', customUserController.deleteByID).as('user.delete')
+Route.get('/users', customUserController.list).as('user.list')
+Route.get('/users/:id', customUserController.getByID).as('user.getById')
+Route.get('/profile',webCustomUserController.show).as('profile.show')
 
-Route.get('/register', async ({ view }) => {
-  return view.render('users/register')
-})
+// routes related to posts
+Route.get('/favposts', webCustomPostController.favList).as('fav.list')
+Route.post('/posts', customPostController.create).as('post.create')
+Route.get('/posts', webCustomPostController.list).as('posts.list')
+Route.get('/posts', customPostController.list).as('post.list')
+Route.get('/posts/:id', webCustomPostController.show).as('posts.show')
+Route.put('/posts/:id', customPostController.update).as('post.update')
+Route.get('/posts/:id', customPostController.getByID).as('post.getById')
+Route.delete('/posts/:id', customPostController.deleteByID).as('post.delete')
 
-Route.post('/register', 'UserController.create').as('user.create')
-Route.post('/register/:id', 'UserController.update').as('user.patch')
-
-Route.post('/post', 'PostController.create').as('post.create')
-
-Route.get('/auth', async ({ view }) => {
-  return view.render('users/auth')
-})
-
-Route.post('/auth', 'AuthController.create').as('auth.create')
-
-Route.post('/logout', 'AuthController.logout').as('auth.logout')
-
-
-Route.get('/favposts', async ({ view }) => {
-  return view.render('posts/fav-posts')
-})
-
-Route.get('/posts', async ({ view, auth }) => {
-  if (auth.isAuthenticated) {
-    const posts = await Post.query().where("user_id", auth.user?.id as number)
-
-    return view.render('posts/posts', { posts: posts })
-  }
-})
-
-Route.get('/posts/:id', async ({ view, auth, params }) => {
-  if (auth.isAuthenticated) {
-
-    const post = await Post.findOrFail(params.id)
-
-    return view.render('posts/show', { post: post })
-  }
-}).as('posts.show')
-
-Route.get('/profile', async ({ view, auth }) => {
-  if(auth.isAuthenticated) {
-    const user = await User.findByOrFail('email',auth.user?.email) 
-    return view.render('users/profile', { user: user })
-  }
-})
+// fav posts routes
+Route.put('/posts/:id/fav-posts', customPostController.favPost).as('favpost.put')
+Route.get('/posts/fav-posts', customPostController.listFavPosts).as('favpost.list')
+Route.get('/posts/:id/fav-posts', customPostController.isFavPost).as('favpost.is')
 
 
-Route.group(() => {
-  CreateAuthRoutes()
-  CreateUserRoutes()
-  CreatePostRoutes()
-}).prefix('/v1')

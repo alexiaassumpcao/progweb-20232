@@ -4,7 +4,7 @@ export default class extends BaseSchema {
   protected tableName = 'posts'
 
   public async up () {
-    this.schema.createTable(this.tableName, (table) => {
+    this.schema.createTableIfNotExists(this.tableName, (table) => {
       table.increments('id')
       table.integer('user_id')
       table.string('title', 200).notNullable()

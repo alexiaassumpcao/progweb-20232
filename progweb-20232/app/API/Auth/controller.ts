@@ -1,10 +1,10 @@
 /* eslint-disable prettier/prettier */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { CreateAuthService } from "../../Auth/utils";
-import { AuthCreateRequest, AuthUpdateRequest } from "../../Auth/interface";
-import { CreateUserService } from 'App/User/utils';
+import { CreateAuthService } from "./utils";
+import { AuthCreateRequest, AuthUpdateRequest } from "./interface";
+import { CreateUserService } from 'App/API/User/utils';
 
-export default class AuthController {
+export default class CustomAuthController {
     public async create({ request, response } : HttpContextContract) {
         const userSvc = CreateUserService()
         const svc = CreateAuthService()

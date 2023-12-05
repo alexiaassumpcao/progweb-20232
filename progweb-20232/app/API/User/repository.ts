@@ -1,5 +1,5 @@
 import User from "App/Models/User"
-import { UserType } from "App/User/interface"
+import { UserType } from "App/API/User/interface"
 
 export class UserRepository {
     idField = "id"
@@ -25,7 +25,7 @@ export class UserRepository {
     }
 
     async update(userToUpdate: UserType): Promise<User> {
-        const userUpdated = await User.updateOrCreate(userToUpdate, userToUpdate)
+        const userUpdated = await User.updateOrCreate({ id: userToUpdate.id }, userToUpdate)
         return userUpdated
     }
 

@@ -1,4 +1,4 @@
-import { AuthType } from "App/Auth/interface";
+import { AuthType } from "App/API/Auth/interface";
 import { AuthRepository } from "./repository";
 import Auth from "App/Models/Auth";
 

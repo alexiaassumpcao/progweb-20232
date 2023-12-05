@@ -1,6 +1,8 @@
 import Post from "App/Models/Post";
 import { PostParamsType, PostType } from "./interface";
 import { PostRepository } from "./repository";
+import File from "App/Models/File";
+import Application from '@ioc:Adonis/Core/Application'
 
 export class PostService {
     repository: PostRepository;
@@ -56,4 +58,55 @@ export class PostService {
             return error
         }
     }
+
+    async favPost(userId: number, postId: number) {
+        try {
+            return await this.repository.favPost(userId, postId)
+        } catch (error) {
+            console.error("error on fav post service: ", error)
+            return error
+        }
+    }
+
+    async listFavpost(userId: number) {
+        try {
+            return await this.repository.listFavPosts(userId)
+        } catch(error) {
+            console.error("error on list fav posts service: ", error)
+            return error
+        }
+    }
+
+    async isFavPost(userId: number, postId: number) {
+        try {
+            const isFav = await this.repository.isFavPost(userId, postId)
+            return {
+                postId: postId,
+                userId: userId,
+                isFavPost: isFav
+            }
+        } catch(error) {
+            console.error("error on is fav post service: ", error)
+            return error
+        }
+    }
+        public async createThumb(data: any) {
+          await data.move(Application.tmpPath('uploads'))
+      
+          const file = new File()
+          file.fileName = data.fileName
+      
+          await file.save()
+      
+          return file
+        }
+        public async getThumb(thumb: number) {
+            try {
+                const thumbFound = await this.repository.findThumb(thumb)
+                return thumbFound
+            } catch(error) {
+                console.error("error on get thumb service: ", error)
+                return error
+            }
+        }
 }

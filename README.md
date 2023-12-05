@@ -18,7 +18,7 @@ git clone <link_do_github>
 
 - Passo 2: entrar na pasta da aplicação
 ```
-cd progweb-20232
+cd progweb-20232/progweb-20232
 ```
 
 - Passo 3: instalar as libs de front
@@ -37,7 +37,7 @@ npm install
 ```
 - Passo 5: executar migrations
 ```
-node ace migrations:run
+node ace migration:run
 ```
 - Passo 6: executar aplicação
 ```
@@ -50,7 +50,7 @@ Parte da documentação se encontra na pasta `docs` do projeto.
 ## Comandos uteis
 ### Executar migrations
 ```
-node ace migrations:run
+node ace migration:run
 ```
 
 ### listar rotas
