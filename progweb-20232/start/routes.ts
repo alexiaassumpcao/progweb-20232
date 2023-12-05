@@ -23,22 +23,35 @@ Route.get('/health', async ({ response }) => {
   return response.send('OK')
 })
 
+// routes related to auth
 Route.get('/login', webCustomUserController.login).as('webauth.login')
 Route.post('/login', customAuthController.login).as('auth.login')
 Route.post('/logout', customAuthController.logout).as('auth.logout')
-
-Route.get('/register', webCustomUserController.register).as('webauth.register')
-Route.post('/register', customUserController.create).as('user.create')
-Route.post('/register/:id', customUserController.update).as('user.patch')
-
-
 Route.get('/auth', webCustomUserController.createAuth).as('webauth.create')
 Route.post('/auth', customAuthController.create).as('auth.create')
 
-
-Route.get('/favposts', webCustomPostController.favList).as('fav.list')
-Route.post('/post', customPostController.create).as('post.create')
-Route.get('/posts', webCustomPostController.list).as('posts.list')
-Route.get('/posts/:id', webCustomPostController.show).as('posts.show')
-
+// routes related to users
+Route.get('/register', webCustomUserController.register).as('webauth.register')
+Route.post('/register', customUserController.create).as('user.create')
+Route.post('/register/:id', customUserController.update).as('user.patch')
+Route.delete('/register/:id', customUserController.deleteByID).as('user.delete')
+Route.get('/users', customUserController.list).as('user.list')
+Route.get('/users/:id', customUserController.getByID).as('user.getById')
 Route.get('/profile',webCustomUserController.show).as('profile.show')
+
+// routes related to posts
+Route.get('/favposts', webCustomPostController.favList).as('fav.list')
+Route.post('/posts', customPostController.create).as('post.create')
+Route.get('/posts', webCustomPostController.list).as('posts.list')
+Route.get('/posts', customPostController.list).as('post.list')
+Route.get('/posts/:id', webCustomPostController.show).as('posts.show')
+Route.put('/posts/:id', customPostController.update).as('post.update')
+Route.get('/posts/:id', customPostController.getByID).as('post.getById')
+Route.delete('/posts/:id', customPostController.deleteByID).as('post.delete')
+
+// fav posts routes
+Route.put('/posts/:id/fav-posts', customPostController.favPost).as('favpost.put')
+Route.get('/posts/fav-posts', customPostController.listFavPosts).as('favpost.list')
+Route.get('/posts/:id/fav-posts', customPostController.isFavPost).as('favpost.is')
+
+
