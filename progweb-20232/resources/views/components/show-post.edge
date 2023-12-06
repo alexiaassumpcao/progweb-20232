@@ -4,8 +4,17 @@
             <h1 class="mb-2 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Wanderlust</h1>
             <h2 class="font-light text-gray-500 sm:text-2xl dark:text-gray-400"> {{post.title}} </h2>
         </div> 
-        <article class="p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-            <p class="mb-2 text-2xl tracking-tight text-gray-900 dark:text-white">{{post.text}}</p>
-        </article >
+        <div class="p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+            <div class="flex items-center space-x-4">
+                <img id="thumb" class="w-8 rounded-full" src="" alt="Thumb"/>
+                <span class="font-medium dark:text-white">
+                    Username
+                </span>
+            </div>
+            <article class="whitespace-pre-line">
+                <p class="text-2xl tracking-tight text-gray-900 dark:text-white">{{post.text}}</p>
+            </article>
+            @include('components/fav-button')
+        </div> 
     </div>
 </section>
