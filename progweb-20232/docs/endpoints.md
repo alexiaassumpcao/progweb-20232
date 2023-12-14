@@ -3,214 +3,235 @@ Endpoints v1.
 
 ## Auth
 
-### get /v1/auth/:user-id
-Endpoint para pegar informação de login do usuário.
-- Body
-none.
-- Response
-*200* OK
-```
-{
-    "id":uuid,
-    "id_usuario":uuid,
-    "senha": string,
-}
-```
-*404*
-*401*
-*403*
-
-### post /v1/auth
+### POST /api/auth
 Endpoint para criar authenticação do usuário.
 - Body
 ```
 {
-    "id_usuario":uuid,
-    "senha": string,
+    "email":string,
+    "password": string,
 }
 ```
-- Response
-*201* Created
-*422*
+- Responses
+    - `Sucesso`: Redireciona para a tela de login
+    - `Falha`: 500 - internal error
 
-### put /v1/auth/:user-id
-Endpoint para editar authenticação do usuário.
+### POST /api/login
+Faz login do usuário. Verifica se o password e email estão corretos.
 - Body
 ```
 {
-    "senha": string,
+    "email":string,
+    "password": string,
 }
 ```
-- Response
-*200* OK
-*422*
-*401*
-*403*
+- Responses
+    - `Sucesso`: redireciona para a página Home
+    - `Falha`: 400 - bad request, Invalid credentials
 
-### delete /v1/auth/:user-id
-Endpoint para deletar authenticação do usuário.
+### POST /api/logout
+Faz o logout do usuário.
 - Body
-none.
-- Response
-*200* OK
-*404*
-*401*
-*403*
+Vazio
+- Responses
+    - `Sucesso`: redireciona para página de Login
+    - `Falha`: 500 - internal server error
 
 ## Usuário
-### post /v1/users
+### POST /api/register
 Endpoint para criar usuário.
 - Body
 ```
 {
     "email": string,
-    "nome": string,
-    "descricao":string || null
+    "name": string,
+    "description":string || null
 }
 ```
-- Response
-*200* OK
-*422*
-*401*
-*403*
+- Responses
+    - `Sucesso`: redireciona para a página de auth
+    - `Falha`: 500 - internal server error
 
-### put /v1/users/:user-id
+### PATCH /api/register/:id
 Endpoint para editar usuário.
 - Body
 ```
 {
     "email": string,
-    "nome": string,
-    "descricao":string || null
+    "name": string,
+    "description":string || null,
+    "password": string
 }
 ```
-- Response
-*200* OK
-*422*
-*401*
-*403*
-*404*
+- Responses
+    - `Sucesso`: redireciona para a página de posts
+    - `Falha`: ou 401 - Unauthorized; ou 500 - internal server error
 
-### get /v1/users/:user-id
+### GET /api/users/:id
 Endpoint para buscar informações de um usuario.
 - Body
 none.
-- Response
-*200* OK
-*404*
-*401*
-*403*
+- Responses
+    - `Sucesso`: 200
+        ```
+        {
+            "id": number,
+            "name": string,
+            "description": string
+        }
+        ```
+    - `Falha`: ou 401 - Unauthorized; ou 500 - internal server error
 
-### get /v1/users/:user-id/favs
-Endpoint que busca os posts de um usuario.
+
+
+
+
+
+### GET /api/users
+Endpoint para listar usuarios.
 - Body
 none.
-- Reponse
-*200*
-*404*
-*401*
-*403*
+- Responses
+    - `Sucesso`: 200
+        ```
+        [
+            {
+                "id": number,
+                "name": string,
+                "description": string
+            }
+        ]
+        ```
+    - `Falha`: ou 401 - Unauthorized; ou 500 - internal server error
 
-### post /v1/users/:user-id/favs/:post-id
-Endpoint para adicionar um post na listagem de favoritos
-- Body
-none.
-- Response
-*200*
-*404*
-*401*
-*403*
-
-### delete /v1/users¹:user-id/favs/:post-id
-Endpoint para retirar um post dos favoritos de um usuario.
-- Body
-none.
-- Response
-*200*
-*401*
-*403*
-*404*
-
-### get /v1/users?name=&email=
-Endpoint para buscar e listar usuarios.
-- Body
-none.
-- Response
-*200*
-*401*
-*403*
-
-### delete /v1/users/:user-id
-Endpoint para deletar usuario e os posts criados pelo usuario.
+### DELETE /api/register/:id
+Endpoint para deletar usuario.
 - Body
 none
-- Response
-*200*
-*404*
-*403*
-*401*
+- Responses
+    - `Sucesso`: 204 - No Content
+    - `Falha`: ou 403 - Unauthorized; ou 500 - internal server error
 
 ## Posts
-### post /v1/posts
+### POST /api/posts
 Endpoint para criar post.
 - Body
 ```
 {
-    "titulo": string,
-    "texto": string,
+    "title": string,
+    "text": string,
     "thumb": string
 }
 ```
-- Response
-*200*
-*422*
-*401*
-*403*
+- Responses
+    - `Sucesso`: redireciona para a página de posts
+    - `Falha`: ou 401 - Unauthorized; ou 500 - internal server error
 
-### put /v1/posts/:post-id
-Endpoint para buscar um post.
+### PATCH /api/posts/:id
+Endpoint para editar post.
 - Body
 ```
 {
-    "titulo": string,
-    "texto": string,
+    "title": string,
+    "text": string,
     "thumb": string
 }
 ```
-- Response
-*200*
-*404*
-*401*
-*403*
-*422*
+- Responses
+    - `Sucesso`: 200 - objeto atualizado
+    ```
+    {
+        "id": number,
+        "title": string,
+        "text": string,
+        "thumb": string
+    }
+    ```
+    - `Falha`: ou 401 - Unauthorized; ou 500 - internal server error
 
-### get /v1/posts/:post-id
+### GET /api/posts/:id
 Endpoint para buscar informacoes de um post.
 - Body
 none.
-- Response
-*200*
-*404*
-*401*
-*403*
+- Responses
+    - `Sucesso`: 200 - retorna o post
+    ```
+    {
+        "id": number,
+        "title": string,
+        "text": string,
+        "thumb": string
+    }
+    ```
+    - `Falha`: ou 401 - Unauthorized; ou 500 - internal server error
 
-### get /v1/posts?titulo=&texto=&user-id=
+
+### GET /api/posts?title=&user-id=
 Endpoint para listar e buscar posts.
 - Body
 none.
-- Response
-*200*
-*401*
-*403*
+- Responses
+    - `Sucesso`: 200 - lista de posts encontrados
+    ```
+    [
+        {
+            "id": number,
+            "title": string,
+            "thumb": string
+            "text": string
+        }
+    ]
+    ```
+    - `Falha`: ou 401 - Unauthorized; ou 500 - internal server error
 
-### delete /v1/posts¹:post-id
+### DELETE /api/posts/:id
 Endpoint para deletar um post.
 - Body
 none.
-- Response
-*200*
-*404*
-*401*
-*403*
+- Responses
+    - `Sucesso`: 200 - No content
+    - `Falha`: ou 401 - Unauthorized; ou 500 - internal server error
+
+### PATCH /api/posts/:id/fav-posts
+Endpoint para favoritar e desfavoritar um post.
+- Body
+none.
+- Responses
+    - `Sucesso`: 204 - No content
+    - `Falha`: ou 401 - Unauthorized; ou 500 - internal server error
+
+### GET /api/posts/fav-posts
+Endpoint para listar os posts favoritos do usuário.
+- Body
+none.
+- Reponses
+    - `Sucesso`: 200 - lista de posts favoritos do usuário logado
+    ```
+    [
+        {
+            "id": number,
+            "title": string,
+            "text": string,
+            "thumb": string
+        }
+    ]
+    ```
+    - `Falha`: ou 401 - Unauthorized; ou 500 - internal server error
+
+### GET /api/posts/:id/fav-posts
+Endpoint para verificar se um post é favorito do usuário logado.
+- Body
+none.
+- Responses
+    - `Sucesso`: 200 - retorna se o post é favorito ou não do usuário logado
+    ```
+    {
+        "postId": number,
+        "userId": number,
+        "isFavPost": boolean
+    }
+    ```
+    - `Falha`: ou 401 - Unauthorized; ou 500 - internal server error
+
 
 

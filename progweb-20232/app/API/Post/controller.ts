@@ -2,16 +2,23 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { PostCreateRequest, PostType, PostUpdateRequest } from '../../API/Post/interface'
 import { CreatePostService } from '../../API/Post/utils'
+import FileService from '../File/service'
 
 export default class CustomPostController {
     public async create({ request, response, auth }: HttpContextContract) {
         try {
             if (auth.isAuthenticated) {
+                //const fileSvc = new FileService()
+                //const thumbName = request.input("thumb")
+                //await fileSvc.create(thumbName)
                 var newPost = await request.validate({ schema: PostCreateRequest})
-                newPost.user_id = auth.user?.id
+                newPost.user_id = auth.user?.user_id
+                const svcType = newPost as PostType;
+                console.log('svctype: ', svcType)
                 const svc = CreatePostService()
-                const createdPost = await svc.createPost(newPost as PostType)
-                if (createdPost != undefined) {
+                
+                const createdPost = await svc.createPost(svcType)
+                if (createdPost) {
                     return response.redirect('/posts')
                 }
             } else {

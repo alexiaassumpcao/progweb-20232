@@ -1,51 +1,51 @@
 # Entidades
-## Autorização
+## Autorização - auth
 ```
-id: uuid - id de autorizacao - fkey
-id_usuario: uuid - id do usuario - required (colocar como index unique)
-email: strinf - email do usuario - required - unique
-senha: string - senha do usuario - required
-```
-
-## Usuário
-```
-id: uuid - id do usuario - fkey
+id: number - id de autorizacao - fkey
+user_id: number - id do usuario - required (colocar como index unique)
 email: string - email do usuario - required - unique
-descricao: string - descricao do usuario
-posts: []Post - lista de posts criados pelo usuario
-favs: []Post - lista de posts favoritados pelo usuario
+password: string - senha do usuario - required
 ```
 
-## Post
+## Usuário - user
 ```
-id: uuid - id so post = fkey
-id_usuario: uuid - id do usuario que criou o post - required
-titulo: string - titulo do post - required
-texto: string - texto do post - required
+id: number - id do usuario - fkey
+email: string - email do usuario - required - unique
+description: string - descricao do usuario
+```
+
+## Post - post
+```
+id: number - id so post = fkey
+user_id: number - id do usuario que criou o post - required
+title: string - titulo do post - required
+text: string - texto do post - required
 thumb: string - thumb do post
 ```
 
 # Tabelas
-## Auth
-id - uuid - fkey
-id_usuario - uuid - required - unique
+Todas as tabelas possuem `created_at` e `update_at` que são datetime.
+## Auth - auth
+id - number - fkey
+user_id - number - required - unique
 email - string - required - unique
-senha - string - required
+password - string - required
 
-## Usuario
-id - uuid - fkey
-nome - string - required
+## Usuario - user
+id - number - fkey
+name - string - required
 email - string - required - unique
-descricao - string | null
+description - string | null
 
-## Post
-id - uuid - fkey
-id_usuario - uuid - required
-titulo - string - required
-texto - string - required
+## Post - post
+id - number - fkey
+user_id - number - required
+title - string - required
+text - string - required
 thumb - string | null
 
-## Posts favs
-id - uuid - fkey
-id_usuario - uuid - required
-id_post - uuid - required
+## Posts favs - fav_posts
+id - number - fkey
+user_id - number - required
+post_id - number - required
+deleted_at - datetime
