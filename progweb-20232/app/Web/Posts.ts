@@ -35,7 +35,6 @@ export default class WebCustomPostController {
       let params = await request.qs()
       params.user_id = auth.user?.user_id 
       const svc = CreatePostService()
-      console.log("params: ", params)
                 
       const favPosts = await svc.searchFavPost(params.title as string, params.user_id)
       return view.render('posts/fav-posts', { favPosts: favPosts })

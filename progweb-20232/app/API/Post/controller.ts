@@ -14,7 +14,6 @@ export default class CustomPostController {
                 var newPost = await request.validate({ schema: PostCreateRequest})
                 newPost.user_id = auth.user?.user_id
                 const svcType = newPost as PostType;
-                console.log('svctype: ', svcType)
                 const svc = CreatePostService()
                 
                 const createdPost = await svc.createPost(svcType)

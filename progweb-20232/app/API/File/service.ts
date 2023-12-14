@@ -7,19 +7,16 @@ export default class FileService {
 
     public async create(data: MultipartFileContract) {
         try {
-            console.log("oi to no file service")
-        await data.move(Application.tmpPath('uploads'))
+            await data.move(Application.tmpPath('uploads'))
 
-        const file = {
-            fileName: data.fileName as string
-        } as File
+            const file = {
+                fileName: data.fileName as string
+            } as File
 
-        console.log('file: ', file)
-
-        await file.save()
+            await file.save()
 
         } catch(error) {
-            console.log(error)
+            console.error(error)
             return error
         }
         
