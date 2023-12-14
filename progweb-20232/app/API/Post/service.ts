@@ -77,6 +77,15 @@ export class PostService {
         }
     }
 
+    async searchFavPost(title: string, userId: number) {
+        try {
+            return await this.repository.searchFavPosts(title, userId)
+        } catch(error) {
+            console.error("error on search fav posts service: ", error)
+            return error
+        }
+    }
+
     async isFavPost(userId: number, postId: number) {
         try {
             const isFav = await this.repository.isFavPost(userId, postId)

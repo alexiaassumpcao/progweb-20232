@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, scope } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, scope, hasOne, HasOne } from '@ioc:Adonis/Lucid/Orm'
+import Post from './Post'
 
 export default class FavPost extends BaseModel {
   @column({ isPrimary: true })
@@ -10,6 +11,11 @@ export default class FavPost extends BaseModel {
 
   @column()
   public post_id: number
+
+  @hasOne(() => Post, {
+    foreignKey: 'id', 
+  })
+  public posts: HasOne<typeof Post>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

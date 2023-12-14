@@ -1,5 +1,4 @@
 import { rules, schema } from "@ioc:Adonis/Core/Validator";
-import File from "App/Models/File";
 
 export type PostType = {
     id?: number;
@@ -23,10 +22,6 @@ export const PostCreateRequest = schema.create({
     text: schema.string.optional({ trim: true }, [
         rules.maxLength(800)
     ]),
-    thumb: schema.file({
-        size: '2mb',
-        extnames: ['jpg', 'gif', 'png'],
-      }),
 })
 
 export const PostParams = schema.create({

@@ -2,8 +2,10 @@ import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
 export default class extends BaseSchema {
   protected tableName = 'fav_posts'
+  protected tableToDrop = 'fav-posts'
 
   public async up() {
+    this.schema.dropTableIfExists(this.tableToDrop)
     this.schema.createTableIfNotExists(this.tableName, (table) => {
       table.increments('id').primary()
       table.integer('user_id').unsigned().references('id').inTable('users').onDelete('CASCADE')

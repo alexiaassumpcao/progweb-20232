@@ -35,7 +35,7 @@ npm install flowbite
 ```
 npm install
 ```
-- Passo 5: executar migrations
+- Passo 5: executar 
 ```
 node ace migration:run
 ```

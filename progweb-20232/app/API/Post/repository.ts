@@ -18,6 +18,10 @@ export class PostRepository {
     favDeletedAtField = "deleted_at"
 
     async list(params: PostParamsType): Promise<Post[]> {
+        if (params.title !== undefined && params.user_id !== undefined) {
+            const posts = await Post.query().where(this.postUserIDField, params.user_id).andWhere(this.postTitleField, 'LIKE', "%"+params.title+"%")
+            return posts
+        }
         if (params.user_id !== undefined) {
             const posts = await Post.query().where(this.postUserIDField, params.user_id)
             return posts
@@ -26,6 +30,7 @@ export class PostRepository {
             const posts = await Post.query().where(this.postTitleField, 'LIKE', "%"+params.title+"%")
             return posts
         }
+
         return await Post.all()
     }
 
@@ -57,8 +62,18 @@ export class PostRepository {
     }
 
     async listFavPosts(userID: number) {
-        const favPosts = await FavPost.query().where(this.favUserIdField, userID).where(this.favDeletedAtField, "null")
-        return favPosts
+        let favPosts = await FavPost.query().where(this.favUserIdField, userID).preload('posts');
+        favPosts = favPosts.filter((post) => post.deleted_at == null)
+
+        const completedPosts = favPosts.map((p) => p.posts)
+        return completedPosts
+    }
+    async searchFavPosts(title: string, userID: number) {
+        let favPosts = await FavPost.query().where(this.favUserIdField, userID).preload('posts');
+        favPosts = favPosts.filter((post) => post.deleted_at == null)
+        let completedPosts = favPosts.map((p) => p.posts)
+        completedPosts = completedPosts.filter((post) => post.title.indexOf(title) !== -1)
+        return completedPosts
     }
 
     async isFavPost(userID: number, postID: number) {

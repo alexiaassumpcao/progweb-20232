@@ -1,6 +1,6 @@
 <section>
     @if(auth.isAuthenticated)
-        <form action="" method="post">
+        <form action="{{ route('favpost.patch', { id: post.id }, { qs: { _method: 'PATCH' }}) }}" method="POST">
             <div class="flex justify-end ">
                 <button type="submit" class="">
                     <svg class="h-6" fill="none" stroke="gray" stroke-width="1.75" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
