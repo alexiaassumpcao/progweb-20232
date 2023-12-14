@@ -2,7 +2,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { PostCreateRequest, PostType, PostUpdateRequest } from '../../API/Post/interface'
 import { CreatePostService } from '../../API/Post/utils'
-import FileService from '../File/service'
+//import FileService from '../File/service'
 
 export default class CustomPostController {
     public async create({ request, response, auth }: HttpContextContract) {

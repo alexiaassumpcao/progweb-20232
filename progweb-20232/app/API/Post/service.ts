@@ -3,7 +3,6 @@ import { PostParamsType, PostType } from "./interface";
 import { PostRepository } from "./repository";
 import File from "App/Models/File";
 import Application from '@ioc:Adonis/Core/Application'
-import FavPost from "App/Models/FavPost";
 
 export class PostService {
     repository: PostRepository;
@@ -77,7 +76,7 @@ export class PostService {
             return error
         }
     }
-    
+
     async searchFavPost(title: string, userId: number) {
         try {
             return await this.repository.searchFavPosts(title, userId)

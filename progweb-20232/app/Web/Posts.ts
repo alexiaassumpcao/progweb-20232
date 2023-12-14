@@ -12,7 +12,7 @@ export default class WebCustomPostController {
       }
   }
 
-  public async list({ view, auth, params } : HttpContextContract) {
+  public async list({ view, auth } : HttpContextContract) {
     if (auth.isAuthenticated) {
       const svc = CreatePostService()
       const posts = await svc.listPosts({ user_id: String(auth.user?.user_id) })
